@@ -4,7 +4,7 @@ import Button from '@/components/ui/Button'
 import { Badge, Spinner, EmptyState } from '@/components/ui/Primitives'
 import { ARTIFACT_FORMAT_META, ArtifactFormat } from '@/lib/ai/prompts'
 
-// ── TYPES ────────────────────────────────────────────────────────────────────────────────
+// ── TYPES ───────────────────────────────────────────────────────────────────────────────
 
 interface Artifact {
   id: string
@@ -17,7 +17,7 @@ interface Artifact {
   content?: string
 }
 
-// ── HELPERS ─────────────────────────────────────────────────────────────────────────────
+// ── HELPERS ───────────────────────────────────────────────────────────────────────────
 
 function statusBadgeVariant(status: Artifact['status']) {
   return { pending: 'default', generating: 'info', ready: 'success', error: 'error' }[status] as
@@ -64,7 +64,7 @@ function renderMarkdown(md: string): string {
     .replace(/^(?!<)/, '<p class="reveta-body text-text-secondary mb-3 leading-relaxed">')
 }
 
-// ── ICON SVGs ─────────────────────────────────────────────────────────────────────────────
+// ── ICON SVGs ────────────────────────────────────────────────────────────────────────────
 
 const ICONS: Record<string, React.ReactNode> = {
   'book-open': (
@@ -105,7 +105,7 @@ const ICONS: Record<string, React.ReactNode> = {
   ),
 }
 
-// ── ARTIFACT VIEWER ──────────────────────────────────────────────────────────────────────────────
+// ── ARTIFACT VIEWER ───────────────────────────────────────────────────────────────────────────
 
 function ArtifactViewer({
   artifact,
@@ -207,7 +207,7 @@ function ArtifactViewer({
   )
 }
 
-// ── FORMAT CARD ──────────────────────────────────────────────────────────────────────────────
+// ── FORMAT CARD ───────────────────────────────────────────────────────────────────────────
 
 function ArtifactCard({
   format,
