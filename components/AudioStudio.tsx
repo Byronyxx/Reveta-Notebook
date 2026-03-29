@@ -4,7 +4,7 @@ import Button from '@/components/ui/Button'
 import { Badge, Spinner } from '@/components/ui/Primitives'
 import { AUDIO_FORMAT_META, AudioFormat } from '@/lib/ai/prompts'
 
-// ── FR-06: SUPPORTED LANGUAGES ─────────────────────────────────────────────────────────────────────
+// ── FR-06: SUPPORTED LANGUAGES ────────────────────────────────────────────────────────────────────────
 const SUPPORTED_LANGUAGES = [
   { code: 'en', label: 'English' }, { code: 'es', label: 'Español' },
   { code: 'fr', label: 'Français' }, { code: 'de', label: 'Deutsch' },
@@ -25,7 +25,7 @@ const SUPPORTED_LANGUAGES = [
 
 
 
-// ── TYPES ────────────────────────────────────────────────────────────────────────────────
+// ── TYPES ─────────────────────────────────────────────────────────────────────────────
 
 interface AudioOverview {
   id: string
@@ -40,7 +40,7 @@ interface AudioOverview {
   share_enabled?: boolean        // FR-16
 }
 
-// ── HELPERS ─────────────────────────────────────────────────────────────────────────────
+// ── HELPERS ───────────────────────────────────────────────────────────────────────────
 
 function formatDuration(seconds: number | null): string {
   if (!seconds) return ''
@@ -69,7 +69,7 @@ function statusBadgeVariant(status: AudioOverview['status']): 'default' | 'info'
   }[status] as 'default' | 'info' | 'success' | 'error'
 }
 
-// ── FORMAT ICONS (inline SVG for zero-dependency icons) ────────────────────────────────────────────
+// ── FORMAT ICONS (inline SVG for zero-dependency icons) ──────────────────────────────────────────
 
 const FormatIcons: Record<string, React.ReactNode> = {
   radio: (
@@ -105,7 +105,7 @@ const FormatIcons: Record<string, React.ReactNode> = {
   ),
 }
 
-// ── AUDIO PLAYER ──────────────────────────────────────────────────────────────────────────────
+// ── AUDIO PLAYER ─────────────────────────────────────────────────────────────────────────────
 
 function AudioPlayer({ signedUrl, title, duration }: {
   signedUrl: string
@@ -242,8 +242,6 @@ function AudioPlayer({ signedUrl, title, duration }: {
     </div>
   )
 }
-
-// ── FORMAT CARD ──────────────────────────────────────────────────────────────────────────────
 
 // ── FR-16: AUDIO SHARE PANEL ───────────────────────────────────────────────────────────────────────
 function AudioSharePanel({
@@ -462,7 +460,7 @@ function FormatCard({
   )
 }
 
-// ── MAIN AUDIO STUDIO ────────────────────────────────────────────────────────────────────────────
+// ── MAIN AUDIO STUDIO ──────────────────────────────────────────────────────────────────────────
 
 export default function AudioStudio({
   notebookId,
@@ -484,7 +482,7 @@ export default function AudioStudio({
     if (!overviewByFormat[ov.format]) overviewByFormat[ov.format] = ov
   }
 
-  // ── Fetch list ─────────────────────────────────────────────────────────────────────────────
+  // ── Fetch list ────────────────────────────────────────────────────────────────────────────
   const fetchOverviews = useCallback(async () => {
     const res = await fetch(`/api/audio-overviews?notebookId=${notebookId}`)
     if (!res.ok) return
@@ -492,7 +490,7 @@ export default function AudioStudio({
     setOverviews(data.overviews || [])
   }, [notebookId])
 
-  // ── Poll status for in-progress items ──────────────────────────────────────────────────────────
+  // ── Poll status for in-progress items ─────────────────────────────────────────────────────────────────
   const pollSingleStatus = useCallback(async (id: string) => {
     const res = await fetch(`/api/audio-overviews/${id}`)
     if (!res.ok) return
@@ -526,7 +524,7 @@ export default function AudioStudio({
     }
   }, [overviews, pollSingleStatus])
 
-  // ── Generate ──────────────────────────────────────────────────────────────────────────────
+  // ── Generate ───────────────────────────────────────────────────────────────────────────────
   const handleGenerate = async (format: AudioFormat) => {
     const res = await fetch('/api/audio-overviews', {
       method: 'POST',
@@ -552,7 +550,7 @@ export default function AudioStudio({
     })
   }
 
-  // ── Delete ────────────────────────────────────────────────────────────────────────────────
+  // ── Delete ───────────────────────────────────────────────────────────────────────────────
   const handleDelete = async (id: string) => {
     setOverviews(prev => prev.filter(ov => ov.id !== id))
     await fetch(`/api/audio-overviews/${id}`, { method: 'DELETE' })
