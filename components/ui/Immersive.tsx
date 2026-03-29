@@ -38,7 +38,7 @@ function prefersReducedMotion(): boolean {
   )
 }
 
-// ─── 1. HOVER CARD 3D ─────────────────────────────────────────────────────────────────────────────
+// ─── 1. HOVER CARD 3D ───────────────────────────────────────────────────────────────────────────
 /**
  * Wraps children in a perspective container that tilts toward the cursor.
  * Perspective is on the PARENT, not the child (Design System rule).
@@ -107,7 +107,7 @@ export function HoverCard3D({
   )
 }
 
-// ─── 2. GLITCH TEXT ──────────────────────────────────────────────────────────────────────────────
+// ─── 2. GLITCH TEXT ────────────────────────────────────────────────────────────────────────────
 /**
  * Renders text with a chromatic aberration glitch effect.
  * Trigger modes:
@@ -205,7 +205,7 @@ export function GlitchText({
   )
 }
 
-// ─── 3. AMBIENT PARTICLES ─────────────────────────────────────────────────────────────────────────────
+// ─── 3. AMBIENT PARTICLES ─────────────────────────────────────────────────────────────────────────
 /**
  * Floating particle field — purely decorative, aria-hidden.
  * Uses IntersectionObserver to pause animation when off-screen.
@@ -274,7 +274,7 @@ export function AmbientParticles({
   )
 }
 
-// ─── 4. INTERSECTION REVEAL ────────────────────────────────────────────────────────────────────────────
+// ─── 4. INTERSECTION REVEAL ───────────────────────────────────────────────────────────────────────
 /**
  * Wraps children in a scroll-triggered reveal: opacity 0→1 + translateY offset→0.
  * Uses IntersectionObserver with configurable threshold.
@@ -337,7 +337,7 @@ export function IntersectionReveal({
   )
 }
 
-// ─── 5. PULSE RING ────────────────────────────────────────────────────────────────────────────────
+// ─── 5. PULSE RING ─────────────────────────────────────────────────────────────────────────────
 /**
  * Concentric expanding ring — attention signal or status indicator.
  * Variants:
@@ -414,7 +414,7 @@ export function PulseRing({
   )
 }
 
-// ─── 6. CURSOR MAGNETIC ─────────────────────────────────────────────────────────────────────────────
+// ─── 6. CURSOR MAGNETIC ───────────────────────────────────────────────────────────────────────────
 /**
  * Magnetic cursor attraction — the wrapped element drifts toward the cursor
  * within a defined attraction radius. Snaps back on pointer leave.
