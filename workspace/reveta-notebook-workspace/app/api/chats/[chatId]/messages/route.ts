@@ -1,13 +1,45 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { executeRAGQuery } from '@/lib/ai/rag'
+import { StylePreference, DEFAULT_STYLE } from '@/lib/ai/prompts'
+
+// GET — fetch message history for a chat
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ chatId: string }> }
+) {
+  const { chatId } = await params
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+
+  const { data: chat } = await supabase
+    .from('chats')
+    .select('user_id')
+    .eq('id', chatId)
+    .single()
+
+  if (!chat || chat.user_id !== user.id) {
+    return NextResponse.json({ error: 'Not found' }, { status: 404 })
+  }
+
+  const { data: messages } = await supabase
+    .from('messages')
+    .select('id, role, content, metadata, created_at')
+    .eq('chat_id', chatId)
+    .order('created_at', { ascending: true })
+
+  return NextResponse.json({ messages: messages || [] })
+}
 
 export async function POST(
     req: NextRequest,
     { params }: { params: Promise<{ chatId: string }> }
 ) {
     const { chatId } = await params
-    const { content } = await req.json()
+    const { content, style, sourceIds } = await req.json()
+    const activeStyle: StylePreference = style || DEFAULT_STYLE
+    const activeScopeIds: string[] | undefined = Array.isArray(sourceIds) && sourceIds.length > 0 ? sourceIds : undefined
 
     if (!content || typeof content !== 'string') {
         return NextResponse.json({ error: 'Message content is required' }, { status: 400 })
@@ -54,15 +86,17 @@ export async function POST(
     // Format history for Anthropic schema
     type MessageParam = { role: 'user' | 'assistant', content: string };
     const formattedHistory: MessageParam[] = (historyData || [])
-        .filter(msg => msg.role === 'user' || msg.role === 'assistant')
-        .map(msg => ({ role: msg.role as 'user' | 'assistant', content: msg.content }))
+        .filter((msg: { role: string; content: string }) => msg.role === 'user' || msg.role === 'assistant')
+        .map((msg: { role: string; content: string }) => ({ role: msg.role as 'user' | 'assistant', content: msg.content }))
 
     try {
         const ragResult = await executeRAGQuery({
             notebookId: chatRow.notebook_id,
             userId: user.id,
             userQuery: content,
-            chatHistory: formattedHistory.slice(0, -1) // Exclude the message we just added since executeRAGQuery appends it.
+            chatHistory: formattedHistory.slice(0, -1),
+            style: activeStyle,         // FR-11 + FR-18
+            sourceIds: activeScopeIds,  // FR-15: selective source scoping
         })
 
         // Save assistant response

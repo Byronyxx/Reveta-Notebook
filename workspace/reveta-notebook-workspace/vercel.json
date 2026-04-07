@@ -1,5 +1,109 @@
-const config = {
-  plugins: ["@tailwindcss/postcss"],
-};
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
 
-export default config;
+  "name": "reveta-notebook",
+
+  "framework": "nextjs",
+
+  "buildCommand": "next build --turbopack",
+  "outputDirectory": ".next",
+  "installCommand": "npm ci",
+
+  "regions": ["iad1", "lhr1", "sin1"],
+
+  "functions": {
+    "app/api/audio-overviews/route.ts": {
+      "maxDuration": 300,
+      "memory": 1024
+    },
+    "app/api/audio-overviews/[id]/route.ts": {
+      "maxDuration": 300,
+      "memory": 1024
+    },
+    "app/api/artifacts/route.ts": {
+      "maxDuration": 300,
+      "memory": 1024
+    },
+    "app/api/chats/[chatId]/messages/route.ts": {
+      "maxDuration": 60,
+      "memory": 512
+    },
+    "app/api/sources/route.ts": {
+      "maxDuration": 120,
+      "memory": 512
+    }
+  },
+
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains; preload"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
+      ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, no-cache, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/_next/static/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/audio/share/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    }
+  ],
+
+  "redirects": [
+    {
+      "source": "/app",
+      "destination": "/dashboard",
+      "permanent": true
+    }
+  ],
+
+  "env": {
+    "NEXT_TELEMETRY_DISABLED": "1"
+  },
+
+  "crons": []
+}

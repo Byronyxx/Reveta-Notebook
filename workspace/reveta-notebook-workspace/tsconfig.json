@@ -1,42 +1,27 @@
 {
-  "name": "temp-next",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
-    "start": "next start",
-    "lint": "eslint",
-    "eval": "npx tsx lib/ai/__tests__/prompt-evals.ts"
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./*"]
+    }
   },
-  "dependencies": {
-    "@anthropic-ai/sdk": "^0.78.0",
-    "@supabase/ssr": "^0.9.0",
-    "@supabase/supabase-js": "^2.98.0",
-    "@upstash/ratelimit": "^2.0.8",
-    "@upstash/redis": "^1.36.3",
-    "cheerio": "^1.2.0",
-    "clsx": "^2.1.1",
-    "mammoth": "^1.11.0",
-    "next": "15.5.12",
-    "openai": "^4.67.0",
-    "pdf-parse": "^2.4.5",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "tailwind-merge": "^3.5.0",
-    "youtube-transcript": "^1.2.1",
-    "zod": "^3.23.0"
-  },
-  "devDependencies": {
-    "@eslint/eslintrc": "^3",
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "15.5.12",
-    "tailwindcss": "^4",
-    "tsx": "^4.19.0",
-    "typescript": "^5"
-  }
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
 }

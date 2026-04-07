@@ -1,13 +1,16 @@
 import { createClient } from '@/lib/supabase/server'
 import { generateEmbedding } from '@/lib/ingest/embeddings'
 import { generateClaudeResponse } from './claude'
+import { StylePreference, DEFAULT_STYLE, buildStyleDirective } from './prompts'
 import { MessageParam } from '@anthropic-ai/sdk/resources/messages'
 
 export interface RAGParams {
     notebookId: string;
     userId: string;
     userQuery: string;
-    chatHistory: MessageParam[]; // previous messages in standard format
+    chatHistory: MessageParam[];
+    style?: StylePreference;      // FR-11: response style, FR-18: language
+    sourceIds?: string[];         // FR-15: selective source scoping (null = all)
 }
 
 export interface RAGResponse {
@@ -35,12 +38,17 @@ export async function executeRAGQuery(params: RAGParams): Promise<RAGResponse> {
     const queryEmbedding = await generateEmbedding(params.userQuery);
 
     // 2. Retrieve relevant chunks (Top 10)
-    const { data: chunks, error } = await supabase.rpc('match_source_chunks', {
+    const rpcParams: Record<string, unknown> = {
         query_embedding: queryEmbedding,
         query_notebook_id: params.notebookId,
-        match_threshold: 0.1, // very low threshold to capture diverse context, rely on Claude to filter
-        match_count: 10
-    });
+        match_threshold: 0.1,
+        match_count: 10,
+    };
+    // FR-15: Selective source scoping — pass UUID[] or null (no filter)
+    if (params.sourceIds && params.sourceIds.length > 0) {
+        rpcParams.filter_source_ids = params.sourceIds;
+    }
+    const { data: chunks, error } = await supabase.rpc('match_source_chunks', rpcParams);
 
     if (error) {
         throw new Error(`Vector search failed: ${error.message}`);
@@ -60,7 +68,10 @@ export async function executeRAGQuery(params: RAGParams): Promise<RAGResponse> {
         contextText = "\n\n(No source material was found matching the query.)";
     }
 
-    const finalSystemPrompt = RAG_SYSTEM_PROMPT + contextText;
+    // FR-11: Response Style + FR-18: Language injection
+    const activeStyle = params.style || DEFAULT_STYLE;
+    const styleDirective = buildStyleDirective(activeStyle);
+    const finalSystemPrompt = RAG_SYSTEM_PROMPT + contextText + styleDirective;
 
     // 4. Append current query to history
     const messages: MessageParam[] = [

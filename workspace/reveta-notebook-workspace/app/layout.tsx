@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono } from 'next/font/google'
+import { ChromaticMoodProvider } from '@/lib/chromatic-moods'
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -56,7 +57,9 @@ export default function RootLayout({
             }
           })()
         `}} />
-        {children}
+        <ChromaticMoodProvider>
+          {children}
+        </ChromaticMoodProvider>
       </body>
     </html>
   );

@@ -414,6 +414,207 @@ body {
   }
 }
 
+/* ═══════════════════════════════════════════════════════════
+   DS-AMBIENT-SYSTEM — Tier-1 Ambient Animation Layer
+   Item 17 in execution queue
+   ═══════════════════════════════════════════════════════════ */
+
+@keyframes reveta-breathe {
+  0%, 100% { opacity: 0.15; transform: scale(1) translateY(0px); }
+  50% { opacity: 0.28; transform: scale(1.04) translateY(-8px); }
+}
+
+@keyframes reveta-drift {
+  0% { transform: translateX(0px) translateY(0px) rotate(0deg); }
+  25% { transform: translateX(12px) translateY(-8px) rotate(1deg); }
+  50% { transform: translateX(-6px) translateY(-16px) rotate(-0.5deg); }
+  75% { transform: translateX(-12px) translateY(-4px) rotate(0.8deg); }
+  100% { transform: translateX(0px) translateY(0px) rotate(0deg); }
+}
+
+@keyframes reveta-pulse-ring {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(45, 45, 150, 0.4); }
+  70% { transform: scale(1); box-shadow: 0 0 0 16px rgba(45, 45, 150, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(45, 45, 150, 0); }
+}
+
+@keyframes reveta-particle-float {
+  0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.4; }
+  33% { transform: translateY(-24px) translateX(8px); opacity: 0.7; }
+  66% { transform: translateY(-12px) translateX(-6px); opacity: 0.5; }
+}
+
+@keyframes reveta-shimmer-sweep {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes reveta-glow-pulse {
+  0%, 100% { opacity: 0.6; filter: blur(40px); }
+  50% { opacity: 1; filter: blur(60px); }
+}
+
+@keyframes reveta-status-ping {
+  0% { transform: scale(1); opacity: 1; }
+  75%, 100% { transform: scale(2.5); opacity: 0; }
+}
+
+@keyframes reveta-ingest-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@layer ambient {
+  /* Ambient canvas background orbs */
+  .reveta-ambient-orb {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    will-change: transform, opacity;
+    animation: reveta-breathe 6s var(--reveta-ease-float) infinite;
+  }
+
+  .reveta-ambient-orb--primary {
+    background: radial-gradient(ellipse, var(--reveta-color-primary-500) 0%, transparent 70%);
+    animation-duration: 7s;
+    animation-delay: 0s;
+  }
+
+  .reveta-ambient-orb--void {
+    background: radial-gradient(ellipse, var(--reveta-accent-void-500) 0%, transparent 70%);
+    animation-duration: 9s;
+    animation-delay: -2s;
+  }
+
+  .reveta-ambient-orb--signal {
+    background: radial-gradient(ellipse, var(--reveta-accent-signal-500) 0%, transparent 70%);
+    animation-duration: 11s;
+    animation-delay: -4s;
+  }
+
+  /* Floating particle dots */
+  .reveta-particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--reveta-color-primary-300);
+    will-change: transform, opacity;
+    animation: reveta-particle-float 8s var(--reveta-ease-float) infinite;
+  }
+
+  /* Shimmer loading state */
+  .reveta-shimmer {
+    background: linear-gradient(
+      90deg,
+      var(--reveta-color-bg-card) 25%,
+      var(--reveta-neutral-800) 50%,
+      var(--reveta-color-bg-card) 75%
+    );
+    background-size: 200% 100%;
+    animation: reveta-shimmer-sweep 1.8s var(--reveta-ease-sharp) infinite;
+  }
+
+  /* Glow effects for active states */
+  .reveta-glow--primary {
+    animation: reveta-glow-pulse 3s var(--reveta-ease-float) infinite;
+  }
+
+  /* Status indicator pings */
+  .reveta-status-ping {
+    position: relative;
+  }
+  .reveta-status-ping::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: var(--reveta-semantic-success-500);
+    animation: reveta-status-ping 1.5s var(--reveta-ease-enter) infinite;
+  }
+
+  /* Ingest spinner for source processing */
+  .reveta-ingest-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--reveta-color-border-default);
+    border-top-color: var(--reveta-accent-signal-500);
+    border-radius: 50%;
+    animation: reveta-ingest-spin 0.8s linear infinite;
+    will-change: transform;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DS-SURFACE-SYSTEM — 6-Plane Surface Depth + Glassmorphism
+   Item 18 in execution queue
+   ═══════════════════════════════════════════════════════════ */
+
+@layer surfaces {
+  /* Void — base canvas, no elevation */
+  .surface-void {
+    background-color: var(--reveta-color-bg-page);
+    box-shadow: var(--reveta-shadow-void);
+  }
+
+  /* Ground — barely lifted */
+  .surface-ground {
+    background-color: var(--reveta-color-bg-card);
+    box-shadow: var(--reveta-shadow-ground);
+    border: 1px solid var(--reveta-color-border-default);
+  }
+
+  /* Lift — first glassmorphism plane */
+  .surface-lift {
+    background-color: color-mix(in srgb, var(--reveta-color-bg-elevated) 85%, transparent);
+    backdrop-filter: var(--reveta-blur-lift);
+    -webkit-backdrop-filter: var(--reveta-blur-lift);
+    box-shadow: var(--reveta-shadow-lift);
+    border: 1px solid color-mix(in srgb, var(--reveta-color-border-default) 60%, transparent);
+  }
+
+  /* Float — card elevation, primary glass surface */
+  .surface-float {
+    background-color: color-mix(in srgb, var(--reveta-color-bg-elevated) 75%, transparent);
+    backdrop-filter: var(--reveta-blur-float);
+    -webkit-backdrop-filter: var(--reveta-blur-float);
+    box-shadow: var(--reveta-shadow-float);
+    border: 1px solid color-mix(in srgb, var(--reveta-color-border-default) 50%, transparent);
+  }
+
+  /* Hover — deep glass for overlays and panels */
+  .surface-hover {
+    background-color: color-mix(in srgb, var(--reveta-color-bg-elevated) 80%, transparent);
+    backdrop-filter: var(--reveta-blur-hover);
+    -webkit-backdrop-filter: var(--reveta-blur-hover);
+    box-shadow: var(--reveta-shadow-hover);
+    border: 1px solid color-mix(in srgb, var(--reveta-accent-signal-500) 15%, var(--reveta-color-border-default));
+  }
+
+  /* Peak — maximum elevation, modals, command palette */
+  .surface-peak {
+    background-color: color-mix(in srgb, var(--reveta-neutral-850) 92%, transparent);
+    backdrop-filter: var(--reveta-blur-peak);
+    -webkit-backdrop-filter: var(--reveta-blur-peak);
+    box-shadow: var(--reveta-shadow-peak);
+    border: 1px solid color-mix(in srgb, var(--reveta-color-border-strong) 40%, transparent);
+  }
+
+  /* Brand accent border — for active states */
+  .surface-brand-border {
+    border-color: color-mix(in srgb, var(--reveta-color-primary-400) 60%, transparent) !important;
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--reveta-color-primary-400) 20%, transparent),
+                var(--reveta-shadow-lift);
+  }
+
+  /* Signal accent glow — for focused/active inputs */
+  .surface-signal-glow {
+    border-color: var(--reveta-accent-signal-500) !important;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--reveta-accent-signal-500) 15%, transparent),
+                var(--reveta-shadow-lift);
+  }
+}
+
 @layer components {
 
   /* Utility classes */
@@ -508,4 +709,284 @@ body {
     opacity: 1;
     transform: scale(1) translateY(0);
   }
+}
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* DS-CHROMATIC-MOODS — 4 Atmospheric States                                 */
+/* Design System §1 · Chromatic Mood Map                                      */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+
+/* All mood transitions use a slow cinematic ease — not utility speed */
+:root {
+  --mood-transition: 600ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+/*
+ * STATE-1: Ambient Rest
+ * Dominant surface: Void + Ground | Motion: Tier-1 only | Brightness: Low
+ * Default state — the interface breathes at rest
+ */
+[data-mood="ambient-rest"],
+:root:not([data-mood]) {
+  --mood-surface-primary: var(--reveta-surface-void);
+  --mood-surface-secondary: var(--reveta-surface-ground);
+  --mood-accent-opacity: 0;
+  --mood-glow-intensity: 0;
+  --mood-ambient-play-state: running;
+}
+
+[data-mood="ambient-rest"] .reveta-ambient,
+:root:not([data-mood]) .reveta-ambient {
+  animation-play-state: running;
+}
+
+/*
+ * STATE-2: Focused Flow
+ * Dominant surface: Ground only | Motion: Paused | Brightness: Reduced
+ * Triggered on input focus — the world steps back so the user can think
+ */
+[data-mood="focused-flow"] {
+  --mood-surface-primary: var(--reveta-surface-ground);
+  --mood-surface-secondary: var(--reveta-surface-ground);
+  --mood-accent-opacity: 0;
+  --mood-glow-intensity: 0;
+  --mood-ambient-play-state: paused;
+}
+
+[data-mood="focused-flow"] .reveta-ambient {
+  animation-play-state: paused;
+  opacity: 0.3;
+  transition: opacity var(--mood-transition);
+}
+
+[data-mood="focused-flow"] .reveta-ambient-orb {
+  opacity: 0.1 !important;
+}
+
+/*
+ * STATE-3: Interaction Peak
+ * Dominant surface: Lift + Float | Motion: Tier-2 | Brightness: High
+ * Triggered on interactive hover — one accent active, world elevates
+ */
+[data-mood="interaction-peak"] {
+  --mood-surface-primary: var(--reveta-surface-lift);
+  --mood-surface-secondary: var(--reveta-surface-float);
+  --mood-accent-opacity: 1;
+  --mood-glow-intensity: 1;
+  --mood-ambient-play-state: running;
+}
+
+[data-mood="interaction-peak"] .reveta-ambient-orb--primary {
+  opacity: 0.25 !important;
+  filter: blur(80px);
+  transition: opacity var(--mood-transition), filter var(--mood-transition);
+}
+
+[data-mood="interaction-peak"] .surface-signal-glow {
+  box-shadow: 0 0 0 1px var(--reveta-accent-signal-500),
+              0 0 24px rgba(59, 130, 246, 0.12);
+}
+
+/*
+ * STATE-4: Revelation
+ * Dominant surface: Float + Peak | Motion: Tier-3 burst | Brightness: Max
+ * Triggered on AI response received, artifact complete — a moment of arrival
+ * Short duration (1800ms) — automatically returns to previous state
+ */
+[data-mood="revelation"] {
+  --mood-surface-primary: var(--reveta-surface-float);
+  --mood-surface-secondary: var(--reveta-surface-peak);
+  --mood-accent-opacity: 1;
+  --mood-glow-intensity: 2;
+  --mood-ambient-play-state: running;
+}
+
+[data-mood="revelation"] .reveta-ambient-orb--primary {
+  opacity: 0.45 !important;
+  filter: blur(60px);
+  transform: scale(1.15);
+  transition:
+    opacity 400ms cubic-bezier(0.16, 1, 0.3, 1),
+    filter 400ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+[data-mood="revelation"] .reveta-ambient-orb--void {
+  opacity: 0.12 !important;
+  filter: blur(90px);
+  transition: opacity 400ms, filter 400ms;
+}
+
+/* Revelation pulse — thin ring expanding from interaction origin */
+@keyframes reveta-revelation-pulse {
+  0%   { transform: scale(0.8); opacity: 0.6; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+[data-mood="revelation"]::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 60% 40% at 50% 50%,
+    rgba(45, 45, 150, 0.06) 0%,
+    transparent 70%
+  );
+  animation: reveta-revelation-pulse 1800ms cubic-bezier(0.76, 0, 0.24, 1) forwards;
+  z-index: 1;
+}
+
+/* prefers-reduced-motion — all mood animations respect system preference */
+@media (prefers-reduced-motion: reduce) {
+  [data-mood="revelation"]::after {
+    animation: none;
+  }
+  [data-mood] .reveta-ambient-orb {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* DS-PARALLAX-NARRATIVE — 5-Plane Scroll-Driven Choreography                */
+/* Design System §3 · TIER-4 NARRATIVE Motion                                 */
+/* Coefficients: base 0.2x | ground 0.4x | content 0.7x | foreground 1.1x   */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+
+/* CSS Scroll Timeline — Chromium 115+ native path */
+@supports (animation-timeline: scroll()) {
+  .parallax-scene {
+    overflow-y: auto;
+    /* Establish scroll timeline on the scene container */
+  }
+
+  /* Base plane — moves at 0.2x scroll speed (deepest, slowest) */
+  .parallax-plane--base {
+    animation: parallax-base linear both;
+    animation-timeline: scroll(nearest);
+    animation-range: entry 0% exit 100%;
+  }
+  @keyframes parallax-base {
+    from { transform: translateY(0) translateZ(0); }
+    to   { transform: translateY(-20%) translateZ(0); }
+  }
+
+  /* Ground plane — 0.4x */
+  .parallax-plane--ground {
+    animation: parallax-ground linear both;
+    animation-timeline: scroll(nearest);
+    animation-range: entry 0% exit 100%;
+  }
+  @keyframes parallax-ground {
+    from { transform: translateY(0) translateZ(0); }
+    to   { transform: translateY(-40%) translateZ(0); }
+  }
+
+  /* Content plane — 0.7x (near-background, most content lives here) */
+  .parallax-plane--content {
+    animation: parallax-content linear both;
+    animation-timeline: scroll(nearest);
+    animation-range: entry 0% exit 100%;
+  }
+  @keyframes parallax-content {
+    from { transform: translateY(0) translateZ(0); }
+    to   { transform: translateY(-70%) translateZ(0); }
+  }
+
+  /* Foreground plane — 1.1x (moves FASTER than scroll = pops toward viewer) */
+  .parallax-plane--foreground {
+    animation: parallax-foreground linear both;
+    animation-timeline: scroll(nearest);
+    animation-range: entry 0% exit 100%;
+  }
+  @keyframes parallax-foreground {
+    from { transform: translateY(0) translateZ(0); }
+    to   { transform: translateY(-110%) translateZ(0); }
+  }
+
+  /* Sky plane — fixed, no transform */
+  .parallax-plane--sky {
+    /* Fixed layer — no animation */
+    transform: none !important;
+  }
+}
+
+/* prefers-reduced-motion — TIER-4 fully disabled per DS-05 */
+@media (prefers-reduced-motion: reduce) {
+  .parallax-plane,
+  .parallax-plane--base,
+  .parallax-plane--ground,
+  .parallax-plane--content,
+  .parallax-plane--foreground {
+    animation: none !important;
+    transform: none !important;
+    will-change: auto !important;
+  }
+}
+
+/* data-comfort-mode — same as reduced-motion */
+[data-comfort-mode="true"] .parallax-plane,
+[data-comfort-mode="true"] [data-parallax-layer] {
+  animation: none !important;
+  transform: none !important;
+  will-change: auto !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* NFR-COMFORT — Comfort Mode: 3D hover + additional motion disablement       */
+/* Supplements existing data-comfort-mode blocks in DS-CHROMATIC and          */
+/* DS-PARALLAX sections above.                                                 */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+
+[data-comfort-mode="true"] {
+  /* Tier-1 ambient — fully paused */
+  .reveta-ambient,
+  .reveta-ambient-orb,
+  .reveta-particle {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* Tier-4 parallax — transforms locked */
+  .parallax-plane,
+  [data-parallax-layer] {
+    animation: none !important;
+    transform: none !important;
+    will-change: auto !important;
+  }
+
+  /* 3D hover — perspective and translateZ nulled */
+  .reveta-3d-parent {
+    perspective: none !important;
+    transform-style: flat !important;
+  }
+
+  /* Chromatic mood pulse — revelation disabled */
+  &::after {
+    animation: none !important;
+  }
+
+  /* Tier-2 and Tier-3 preserved, but with instant transitions */
+  *,
+  *::before,
+  *::after {
+    --reveta-duration-quick: 0ms !important;
+    --reveta-duration-standard: 0ms !important;
+    --reveta-duration-deliberate: 0ms !important;
+    --reveta-duration-cinematic: 0ms !important;
+    --reveta-duration-story: 0ms !important;
+  }
+}
+
+/* Comfort mode: sr-only utility for announcer */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border-width: 0;
 }
