@@ -30,6 +30,8 @@ CREATE TRIGGER update_artifacts_modtime
 
 CREATE TYPE public.share_access AS ENUM ('view', 'edit');
 
+DROP TABLE IF EXISTS public.notebook_shares CASCADE;
+
 CREATE TABLE public.notebook_shares (
   id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   notebook_id   UUID NOT NULL REFERENCES public.notebooks(id) ON DELETE CASCADE,

@@ -1,6 +1,4 @@
-// @ts-nocheck
 import { SourceAdapter, IngestInput, ExtractionResult } from './index'
-import pdfParse from 'pdf-parse'
 
 export class PdfAdapter implements SourceAdapter {
     canHandle(input: IngestInput): boolean {
@@ -10,9 +8,13 @@ export class PdfAdapter implements SourceAdapter {
     async extract(input: IngestInput): Promise<ExtractionResult> {
         if (!input.buffer) throw new Error('No buffer provided for PDF extraction');
 
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
+        const pdfParse = require('pdf-parse');
+
         // Using pdf-parse natively to extract text streams
         const data = await pdfParse(input.buffer);
-        const text = data.text.replace(/\s+/g, ' ').trim();
+        
+        const text = String(data.text || '').replace(/\s+/g, ' ').trim();
         const wordCount = text.split(/\s+/).filter((w: string) => w.length > 0).length;
 
         return {

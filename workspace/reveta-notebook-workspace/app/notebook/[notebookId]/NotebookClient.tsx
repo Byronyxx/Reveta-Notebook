@@ -404,7 +404,7 @@ function ChatInterface({ notebookId, chat, onNewChat, style, allSources = [] }: 
               </div>
               <p className="reveta-h3 text-text-primary mb-reveta-1">Ask anything</p>
               <p className="reveta-caption text-text-secondary">
-                Your questions will be answered strictly from the sources you've added.
+                Your questions will be answered strictly from the sources you&apos;ve added.
               </p>
             </div>
           </div>

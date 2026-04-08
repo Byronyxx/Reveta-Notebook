@@ -1,0 +1,73 @@
+﻿
+C:\Users\Byron\Downloads\Reveta Notebook\workspace\reveta-notebook-workspace\app\audio\share\[token]\AudioSharePlayer.tsx
+  204:11  error  Do not use an `<a>` element to navigate to `/`. Use `<Link />` from `next/link` instead. See: https://nextjs.org/docs/messages/no-html-link-for-pages  @next/next/no-html-link-for-pages
+
+C:\Users\Byron\Downloads\Reveta Notebook\workspace\reveta-notebook-workspace\app\dashboard\DashboardClient.tsx
+    4:8   warning  'Link' is defined but never used               @typescript-eslint/no-unused-vars
+    7:10  warning  'Card' is defined but never used               @typescript-eslint/no-unused-vars
+    7:35  warning  'Badge' is defined but never used              @typescript-eslint/no-unused-vars
+    7:42  warning  'Skeleton' is defined but never used           @typescript-eslint/no-unused-vars
+  185:10  warning  'creating' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Byron\Downloads\Reveta Notebook\workspace\reveta-notebook-workspace\app\notebook\[notebookId]\NotebookClient.tsx
+    2:39  warning  'useCallback' is defined but never used                                                                  @typescript-eslint/no-unused-vars
+    9:8   warning  'SharingModal' is defined but never used                                                                 @typescript-eslint/no-unused-vars
+   10:8   warning  'StyleSettings' is defined but never used                                                                @typescript-eslint/no-unused-vars
+   12:8   warning  'NotebookPreferences' is defined but never used                                                          @typescript-eslint/no-unused-vars
+   52:10  warning  'formatBytes' is defined but never used                                                                  @typescript-eslint/no-unused-vars
+  306:6   warning  React Hook useEffect has a missing dependency: 'chat'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  407:78  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                          react/no-unescaped-entities
+  561:43  warning  'userId' is defined but never used                                                                       @typescript-eslint/no-unused-vars
+  573:10  warning  'showSharingModal' is assigned a value but never used                                                    @typescript-eslint/no-unused-vars
+  574:10  warning  'showStyleSettings' is assigned a value but never used                                                   @typescript-eslint/no-unused-vars
+
+C:\Users\Byron\Downloads\Reveta Notebook\workspace\reveta-notebook-workspace\app\privacy\page.tsx
+  17:224  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                        react/no-unescaped-entities
+  35:17   error  Do not use an `<a>` element to navigate to `/`. Use `<Link />` from `next/link` instead. See: https://nextjs.org/docs/messages/no-html-link-for-pages  @next/next/no-html-link-for-pages
+
+C:\Users\Byron\Downloads\Reveta Notebook\workspace\reveta-notebook-workspace\components\ArtifactStudio.tsx
+  4:26  warning  'EmptyState' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Byron\Downloads\Reveta Notebook\workspace\reveta-notebook-workspace\components\AudioStudio.tsx
+  119:10  warning  'volume' is assigned a value but never used     @typescript-eslint/no-unused-vars
+  119:18  warning  'setVolume' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Byron\Downloads\Reveta Notebook\workspace\reveta-notebook-workspace\components\NotebookPreferences.tsx
+  4:10  warning  'Spinner' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Byron\Downloads\Reveta Notebook\workspace\reveta-notebook-workspace\components\ui\Feedback.tsx
+  133:5  error    'toastListeners' is never reassigned. Use 'const' instead  prefer-const
+  133:5  warning  'toastListeners' is assigned a value but never used        @typescript-eslint/no-unused-vars
+
+C:\Users\Byron\Downloads\Reveta Notebook\workspace\reveta-notebook-workspace\components\ui\Immersive.tsx
+  467:57  warning  The ref value 'animRef.current' will likely have changed by the time this effect cleanup function runs. If this ref points to a node rendered by React, copy 'animRef.current' to a variable inside the effect, and use that variable in the cleanup function  react-hooks/exhaustive-deps
+
+C:\Users\Byron\Downloads\Reveta Notebook\workspace\reveta-notebook-workspace\lib\__tests__\perf-benchmarks.ts
+  170:11  warning  'notebookId' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Byron\Downloads\Reveta Notebook\workspace\reveta-notebook-workspace\lib\ai\audio-overview.ts
+  27:7  warning  'SPEAKER_REGEX' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Byron\Downloads\Reveta Notebook\workspace\reveta-notebook-workspace\lib\ai\rag.ts
+  62:32  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  62:37  warning  'index' is defined but never used         @typescript-eslint/no-unused-vars
+
+C:\Users\Byron\Downloads\Reveta Notebook\workspace\reveta-notebook-workspace\lib\ai\tts.ts
+  18:7  warning  'DUAL_HOST_FORMATS' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Byron\Downloads\Reveta Notebook\workspace\reveta-notebook-workspace\lib\ingest\adapters\pdf.ts
+  1:1  error  Do not use "@ts-nocheck" because it alters compilation errors  @typescript-eslint/ban-ts-comment
+
+C:\Users\Byron\Downloads\Reveta Notebook\workspace\reveta-notebook-workspace\lib\monitoring.ts
+   43:87  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  114:91  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  115:52  warning  '_' is defined but never used             @typescript-eslint/no-unused-vars
+  134:91  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  136:23  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\Byron\Downloads\Reveta Notebook\workspace\reveta-notebook-workspace\lib\supabase\middleware.ts
+  18:58  warning  'options' is defined but never used  @typescript-eslint/no-unused-vars
+
+Γ£û 37 problems (11 errors, 26 warnings)
+  1 error and 0 warnings potentially fixable with the `--fix` option.
+

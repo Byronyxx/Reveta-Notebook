@@ -130,7 +130,7 @@ export function ToastContainer({ toasts, onDismiss }: {
 }
 
 // Hook for easy toast management
-let toastListeners: Array<(toast: ToastItem) => void> = []
+const toastListeners: Array<(toast: ToastItem) => void> = []
 
 export function useToast() {
   const [toasts, setToasts] = useState<ToastItem[]>([])

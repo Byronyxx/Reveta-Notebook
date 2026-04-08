@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 export default function PrivacyPage() {
     return (
         <div className="flex flex-col items-center justify-center min-h-screen p-reveta-8 bg-page text-text-primary">
@@ -14,7 +16,7 @@ export default function PrivacyPage() {
                 <section className="space-y-reveta-3">
                     <h2 className="reveta-h3 text-interactive-primary">2. Data Isolation & Storage</h2>
                     <p className="reveta-body text-text-secondary">
-                        Your notebooks and uploaded source documents are stored in strictly isolated databases. Row-Level Security (RLS) ensures that only your authenticated user account can ever read or write your notebook's data.
+                        Your notebooks and uploaded source documents are stored in strictly isolated databases. Row-Level Security (RLS) ensures that only your authenticated user account can ever read or write your notebook&apos;s data.
                     </p>
                 </section>
 
@@ -32,9 +34,9 @@ export default function PrivacyPage() {
                     </p>
                 </section>
 
-                <a href="/" className="inline-block mt-reveta-4 text-interactive-primary hover:text-interactive-primary-hover reveta-label">
+                <Link href="/" className="inline-block mt-reveta-4 text-interactive-primary hover:text-interactive-primary-hover reveta-label">
                     &larr; Return to Application
-                </a>
+                </Link>
             </main>
         </div>
     )

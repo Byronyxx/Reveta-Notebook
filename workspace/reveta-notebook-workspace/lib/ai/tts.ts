@@ -1,3 +1,4 @@
+import { env } from '@/lib/env';
 import { AudioFormat } from './prompts'
 
 // ── VOICE MAP ─────────────────────────────────────────────────────────────────
@@ -30,7 +31,7 @@ export interface SpeakerLine {
  * Returns a Buffer containing the MP3 audio data.
  */
 async function synthesizeLine(text: string, voice: OpenAIVoice): Promise<Buffer> {
-  const apiKey = process.env.OPENAI_API_KEY
+  const apiKey = env.OPENAI_API_KEY
   if (!apiKey) throw new Error('OPENAI_API_KEY is required for TTS synthesis.')
 
   // Clean up text for TTS (remove any stray speaker tags, etc.)

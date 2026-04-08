@@ -1,3 +1,4 @@
+import { env } from '@/lib/env';
 import { SourceAdapter, IngestInput, ExtractionResult } from './index'
 
 const WHISPER_MAX_BYTES = 25 * 1024 * 1024; // 25MB OpenAI hard limit
@@ -19,7 +20,7 @@ export class AudioAdapter implements SourceAdapter {
     async extract(input: IngestInput): Promise<ExtractionResult> {
         if (!input.buffer) throw new Error('No audio buffer provided for transcription.');
 
-        const apiKey = process.env.OPENAI_API_KEY;
+        const apiKey = env.OPENAI_API_KEY;
         if (!apiKey) throw new Error('OPENAI_API_KEY is required for audio transcription (Whisper).');
 
         if (input.buffer.byteLength > WHISPER_MAX_BYTES) {

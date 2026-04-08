@@ -1,3 +1,4 @@
+import { env } from '@/lib/env';
 import { generateClaudeCompletion } from './claude'
 import { getAudioPrompt, AudioFormat } from './prompts'
 import { synthesizeScript, SpeakerLine } from './tts'
@@ -69,8 +70,8 @@ export async function buildSourceContext(notebookId: string): Promise<{
   wordCount: number
 }> {
   const serviceClient = createServiceClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
+    env.NEXT_PUBLIC_SUPABASE_URL,
+    env.SUPABASE_SERVICE_ROLE_KEY
   )
 
   // Fetch all ready source titles for this notebook
@@ -165,8 +166,8 @@ export async function generateAudioScript(
 export async function processAudioOverviewJob(overviewId: string, notebookId: string, format: AudioFormat, language: string = 'en') {
   // Use service client for all DB writes in background context
   const serviceClient = createServiceClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
+    env.NEXT_PUBLIC_SUPABASE_URL,
+    env.SUPABASE_SERVICE_ROLE_KEY
   )
 
   const updateStatus = async (

@@ -1,8 +1,9 @@
+import { env } from '@/lib/env';
 import { Redis } from "@upstash/redis";
 
 export const redisCache = new Redis({
-    url: process.env.UPSTASH_REDIS_REST_URL!,
-    token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+    url: env.UPSTASH_REDIS_REST_URL,
+    token: env.UPSTASH_REDIS_REST_TOKEN,
 });
 
 export async function getCachedResponse(key: string): Promise<string | null> {

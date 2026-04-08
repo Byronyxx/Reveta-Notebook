@@ -1,10 +1,11 @@
+import { env } from '@/lib/env';
 import Anthropic from '@anthropic-ai/sdk'
 import { getCachedResponse, setCachedResponse } from './cache'
 import { aiRateLimit } from './rate-limit'
 import { startAITrace, endAITrace } from '../monitoring'
 
 export const anthropic = new Anthropic({
-    apiKey: process.env.ANTHROPIC_API_KEY,
+    apiKey: env.ANTHROPIC_API_KEY,
 })
 
 const PINNED_MODEL = 'claude-sonnet-4-20250514'

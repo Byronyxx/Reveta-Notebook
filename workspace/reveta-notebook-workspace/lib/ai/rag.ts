@@ -59,7 +59,7 @@ export async function executeRAGQuery(params: RAGParams): Promise<RAGResponse> {
     const sourceMeta: { id: string, source_id: string, similarity: number }[] = [];
 
     if (chunks && chunks.length > 0) {
-        chunks.forEach((chunk: any, index: number) => {
+        chunks.forEach((chunk: { id: string; source_id: string; similarity: number; content: string }) => {
             // FR-02 Citations: Binding prompt format to chunk.id
             contextText += `\n\n--- Source Chunk [ChunkID: ${chunk.id}] ---\n${chunk.content}`;
             sourceMeta.push({ id: chunk.id, source_id: chunk.source_id, similarity: chunk.similarity });

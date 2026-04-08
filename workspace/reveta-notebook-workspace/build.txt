@@ -1,0 +1,105 @@
+﻿
+> temp-next@0.1.0 build
+> next build
+
+   Γû▓ Next.js 15.5.12
+   - Environments: .env.local
+
+   Creating an optimized production build ...
+npm :  ΓÜá Compiled with warnings in 5.6s
+At line:1 char:1
++ npm run build > build_report.txt 2>&1
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ( ΓÜá Compiled with warnings in 5.6s:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+./lib/ingest/adapters/pdf.ts
+Attempted import error: 'pdf-parse' does not contain a default export (imported as 'pdfParse').
+
+Import trace for requested module:
+./lib/ingest/adapters/pdf.ts
+./lib/ingest/pipeline.ts
+./app/api/sources/route.ts
+
+ Γ£ô Compiled successfully in 13.1s
+   Linting and checking validity of types ...
+
+Failed to compile.
+
+./app/audio/share/[token]/AudioSharePlayer.tsx
+204:11  Error: Do not use an `<a>` element to navigate to `/`. Use `<Link />` from `next/link` instead. See: 
+https://nextjs.org/docs/messages/no-html-link-for-pages  @next/next/no-html-link-for-pages
+
+./app/dashboard/DashboardClient.tsx
+4:8  Warning: 'Link' is defined but never used.  @typescript-eslint/no-unused-vars
+7:10  Warning: 'Card' is defined but never used.  @typescript-eslint/no-unused-vars
+7:35  Warning: 'Badge' is defined but never used.  @typescript-eslint/no-unused-vars
+7:42  Warning: 'Skeleton' is defined but never used.  @typescript-eslint/no-unused-vars
+185:10  Warning: 'creating' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./app/notebook/[notebookId]/NotebookClient.tsx
+2:39  Warning: 'useCallback' is defined but never used.  @typescript-eslint/no-unused-vars
+9:8  Warning: 'SharingModal' is defined but never used.  @typescript-eslint/no-unused-vars
+10:8  Warning: 'StyleSettings' is defined but never used.  @typescript-eslint/no-unused-vars
+12:8  Warning: 'NotebookPreferences' is defined but never used.  @typescript-eslint/no-unused-vars
+52:10  Warning: 'formatBytes' is defined but never used.  @typescript-eslint/no-unused-vars
+306:6  Warning: React Hook useEffect has a missing dependency: 'chat'. Either include it or remove the dependency 
+array.  react-hooks/exhaustive-deps
+407:78  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+561:43  Warning: 'userId' is defined but never used.  @typescript-eslint/no-unused-vars
+573:10  Warning: 'showSharingModal' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+574:10  Warning: 'showStyleSettings' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./app/privacy/page.tsx
+17:224  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+35:17  Error: Do not use an `<a>` element to navigate to `/`. Use `<Link />` from `next/link` instead. See: 
+https://nextjs.org/docs/messages/no-html-link-for-pages  @next/next/no-html-link-for-pages
+
+./components/ArtifactStudio.tsx
+4:26  Warning: 'EmptyState' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/AudioStudio.tsx
+119:10  Warning: 'volume' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+119:18  Warning: 'setVolume' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./components/NotebookPreferences.tsx
+4:10  Warning: 'Spinner' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/ui/Feedback.tsx
+133:5  Error: 'toastListeners' is never reassigned. Use 'const' instead.  prefer-const
+133:5  Warning: 'toastListeners' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./components/ui/Immersive.tsx
+467:57  Warning: The ref value 'animRef.current' will likely have changed by the time this effect cleanup function 
+runs. If this ref points to a node rendered by React, copy 'animRef.current' to a variable inside the effect, and use 
+that variable in the cleanup function.  react-hooks/exhaustive-deps
+
+./lib/ai/audio-overview.ts
+27:7  Warning: 'SPEAKER_REGEX' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./lib/ai/rag.ts
+62:32  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+62:37  Warning: 'index' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./lib/ai/tts.ts
+18:7  Warning: 'DUAL_HOST_FORMATS' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./lib/ingest/adapters/pdf.ts
+1:1  Error: Do not use "@ts-nocheck" because it alters compilation errors.  @typescript-eslint/ban-ts-comment
+
+./lib/monitoring.ts
+43:87  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+114:91  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+115:52  Warning: '_' is defined but never used.  @typescript-eslint/no-unused-vars
+134:91  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+136:23  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./lib/supabase/middleware.ts
+18:58  Warning: 'options' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./lib/__tests__/perf-benchmarks.ts
+170:11  Warning: 'notebookId' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+info  - Need to disable some ESLint rules? Learn more here: 
+https://nextjs.org/docs/app/api-reference/config/eslint#disabling-rules

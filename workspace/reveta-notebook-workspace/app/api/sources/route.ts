@@ -1,6 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { processIngestJob } from '@/lib/ingest/pipeline'
+import { z } from 'zod'
+
+export const runtime = 'nodejs'
+export const maxDuration = 60
+
+const sourceSchema = z.object({
+    notebookId: z.string().uuid("Invalid notebookId"),
+    url: z.string().url().optional().or(z.literal('')),
+    file: z.any().optional()
+}).refine(data => data.url || data.file, {
+    message: "Must provide either file or url",
+    path: ["url"]
+});
 
 export async function POST(req: NextRequest) {
     const supabase = await createClient()
@@ -12,13 +26,21 @@ export async function POST(req: NextRequest) {
 
     try {
         const formData = await req.formData()
-        const notebookId = formData.get('notebookId') as string
-        const url = formData.get('url') as string
-        const file = formData.get('file') as File | null
+        const rawNotebookId = formData.get('notebookId');
+        const rawUrl = formData.get('url');
+        const file = formData.get('file') as File | null;
 
-        if (!notebookId) {
-            return NextResponse.json({ error: 'notebookId is required' }, { status: 400 })
+        const parseResult = sourceSchema.safeParse({
+            notebookId: rawNotebookId,
+            url: rawUrl,
+            file
+        });
+
+        if (!parseResult.success) {
+            return NextResponse.json({ error: parseResult.error.errors[0].message }, { status: 400 })
         }
+
+        const { notebookId, url } = parseResult.data;
 
         // Auth check: User must have 'edit' access to notebook
         const { data: hasAccess } = await supabase.rpc('user_has_notebook_access', {
@@ -46,7 +68,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: 'Must provide either file or url' }, { status: 400 })
         }
 
-        const title = file ? filename : new URL(url).hostname;
+        const title = file ? filename : new URL(url as string).hostname;
 
         // Determine format tag
         let sourceType = 'txt';
@@ -56,7 +78,9 @@ export async function POST(req: NextRequest) {
         else if (filename.endsWith('.docx') || mimetype.includes('wordprocessingml')) sourceType = 'docx';
         else if (filename.endsWith('.mp3') || filename.endsWith('.wav') || mimetype.startsWith('audio/')) sourceType = 'audio';
 
-        const { data: sourceRow, error: insertError } = await supabase
+        // Use admin client for DB operations — user identity already verified above
+        const adminDb = createAdminClient()
+        const { data: sourceRow, error: insertError } = await adminDb
             .from('sources')
             .insert({
                 notebook_id: notebookId,

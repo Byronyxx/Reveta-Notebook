@@ -1,5 +1,6 @@
 'use client'
 import { useState, useRef, useEffect } from 'react'
+import Link from 'next/link'
 
 interface ShareOverview {
   id: string
@@ -201,9 +202,9 @@ export default function AudioSharePlayer({
         {/* Footer */}
         <p className="reveta-label text-text-secondary text-center mt-2">
           Generated with{' '}
-          <a href="/" className="text-primary-400 hover:text-primary-300 transition-colors duration-quick">
+          <Link href="/" className="text-primary-400 hover:text-primary-300 transition-colors duration-quick">
             Reveta Notebook
-          </a>
+          </Link>
         </p>
       </div>
 

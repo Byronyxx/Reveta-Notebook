@@ -2,8 +2,16 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { processAudioOverviewJob } from '@/lib/ai/audio-overview'
 import { AudioFormat } from '@/lib/ai/prompts'
+import { z } from 'zod'
 
 const VALID_FORMATS: AudioFormat[] = ['deep_dive', 'brief', 'critique', 'debate', 'lecture']
+
+const audioSchema = z.object({
+  notebookId: z.string().uuid("Invalid notebookId"),
+  format: z.enum(['deep_dive', 'brief', 'critique', 'debate', 'lecture']),
+  language: z.string().optional().default('en')
+});
+
 
 // POST /api/audio-overviews — Trigger a new audio overview generation job
 export async function POST(req: NextRequest) {
@@ -11,12 +19,14 @@ export async function POST(req: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-  const { notebookId, format, language = 'en' } = await req.json()
-
-  if (!notebookId) return NextResponse.json({ error: 'notebookId is required' }, { status: 400 })
-  if (!VALID_FORMATS.includes(format)) {
-    return NextResponse.json({ error: `Invalid format. Must be one of: ${VALID_FORMATS.join(', ')}` }, { status: 400 })
+  const body = await req.json().catch(() => ({}))
+  const parseResult = audioSchema.safeParse(body)
+  
+  if (!parseResult.success) {
+    return NextResponse.json({ error: parseResult.error.errors[0].message }, { status: 400 })
   }
+  
+  const { notebookId, format, language } = parseResult.data;
 
   // Verify user has edit access to the notebook
   const { data: hasAccess } = await supabase.rpc('user_has_notebook_access', {

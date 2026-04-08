@@ -1,3 +1,4 @@
+import { env } from '@/lib/env';
 import { generateClaudeCompletion } from './claude'
 import { createClient as createServiceClient } from '@supabase/supabase-js'
 import { getArtifactPrompt, ArtifactFormat } from './prompts'
@@ -14,8 +15,8 @@ export async function buildArtifactSourceContext(
   sourceCount: number
 }> {
   const serviceClient = createServiceClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
+    env.NEXT_PUBLIC_SUPABASE_URL,
+    env.SUPABASE_SERVICE_ROLE_KEY
   )
 
   let sourceQuery = serviceClient
@@ -98,8 +99,8 @@ export async function processArtifactJob(
   filterSourceIds?: string[] // FR-17: optional source subset (mind map scoping)
 ) {
   const serviceClient = createServiceClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
+    env.NEXT_PUBLIC_SUPABASE_URL,
+    env.SUPABASE_SERVICE_ROLE_KEY
   )
 
   const updateStatus = async (status: string, extra?: Record<string, unknown>) => {
